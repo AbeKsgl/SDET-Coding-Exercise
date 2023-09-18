@@ -11,7 +11,7 @@ describe("Checkboxes and Dropdown", () => {
     const expectedPageHeader = "Checkboxes";
     const url = "https://the-internet.herokuapp.com/checkboxes";
 
-    // Generate random click counts for the checkboxes
+    // Generate random number of clicks
     const firstRandomNumber = Utility.generateRandomNumber(1, 10);
     const secondRandomNumber = Utility.generateRandomNumber(1, 10);
 
@@ -23,12 +23,12 @@ describe("Checkboxes and Dropdown", () => {
     const pageHeader = await Checkbox.readCheckboxHeader();
     const checkbox = await Checkbox.checkbox;
 
-    // Click the first checkbox based on random count
+    // Clicks the first checkbox based on random count
     // And it verifies if it is checked or not
     let isFirstChecked = true;
     let firstCheckBox = await Checkbox.checkbox[0];
     for (let i = 0; i < firstRandomNumber; i++) {
-      firstCheckBox.click();
+      await firstCheckBox.click();
       const isSelected = await firstCheckBox.isSelected();
       await expect(isFirstChecked, "checkbox is not triggered").to.equal(
         isSelected
@@ -41,7 +41,7 @@ describe("Checkboxes and Dropdown", () => {
     let isSecondChecked = false;
     let secondCheckBox = await Checkbox.checkbox[1];
     for (let i = 0; i < secondRandomNumber; i++) {
-      secondCheckBox.click();
+      await secondCheckBox.click();
       const isSelected = await secondCheckBox.isSelected();
       await expect(isSecondChecked, "checkbox is not triggered").to.equal(
         isSelected
@@ -57,7 +57,7 @@ describe("Checkboxes and Dropdown", () => {
     await expect(checkbox, "Should have 2 checkbox ").to.have.lengthOf(2);
   });
 
-  it("Dropdown List", async () => {
+  it("should randomly select an option from Dropdown List", async () => {
     // Define test data
     const expectedPageHeader = "Dropdown List";
     const url = "https://the-internet.herokuapp.com/dropdown";
@@ -76,7 +76,7 @@ describe("Checkboxes and Dropdown", () => {
     // Clicks the option at the random index
     await options[randomIndex].click();
     const isSelected = await options[randomIndex].isSelected();
-    await browser.pause(2000);
+
     // Assertions
     await expect(currentUrl, "URL should be correct").to.equal(url);
     await expect(pageHeader, "should have correct page header").to.equal(

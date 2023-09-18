@@ -4,10 +4,36 @@ import DataTables from "../pageobjects/dataTables.page.js";
 const expect = chai.expect;
 
 describe("Data Table", () => {
+  /**
+   * Clicks on element and checks the  URLs.
+   * @param {Array} element
+   * @param {string} expectedUrl
+   * @example await testLinks(editArray, editUrl)
+   */
+  async function testLinks(element, expectedUrl) {
+    for (const locator of element) {
+      // Click the link
+      await locator.click();
+
+      // Get the current URL
+      const url = await browser.getUrl();
+
+      // Assert that the URL is updated as expected
+      expect(
+        url,
+        `when clicking on edit/delete link, URL should be updated`
+      ).to.equal(expectedUrl);
+    }
+  }
+
+  // before each test...
   beforeEach(async () => {
     await DataTables.open();
   });
 
+  //
+  // Tests...
+  //
   it("should land on correct page", async () => {
     // Define test data
     const expectedPageHeader = "Data Tables";
@@ -204,7 +230,7 @@ describe("Data Table", () => {
     // Define test data
     const sortedWebsites = (await DataTables.readColumn(5)).sort();
     const websiteLocator = await DataTables.columnHeader[4];
-
+  
     // Dispatch click
     await websiteLocator.click();
     const websites = await DataTables.readColumn(5);
@@ -240,12 +266,15 @@ describe("Data Table", () => {
   it("should dispatch click action on edit/delete links", async () => {
     const editUrl = "https://the-internet.herokuapp.com/tables#edit";
     const editArray = await DataTables.editLinks;
-  
-    await editArray.forEach(async (element) => {
-      await element.click();
-      const url = await browser.getUrl();
-      console.log(url, 'indisefffffffffffffffffffffffffffffffffffffff')
-      await expect(url).to.equal('ddd');
-    });
+
+    await testLinks(editArray, editUrl);
+  });
+
+  // delete links
+  it("should dispatch click action on delete links", async () => {
+    const deleteUrl = "https://the-internet.herokuapp.com/tables#delete";
+    const deleteArray = await DataTables.deleteLinks;
+
+    await testLinks(deleteArray, deleteUrl);
   });
 });

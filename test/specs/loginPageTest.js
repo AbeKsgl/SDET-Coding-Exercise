@@ -6,10 +6,6 @@ import { Utility } from "../utils/Utilitiy.js";
 const expect = chai.expect;
 
 describe("Login Page", () => {
-  beforeEach(async () => {
-    await LoginPage.open();
-  });
-
   /**
    * Common assertions
    * @param {*} expectedErrorMessage
@@ -28,6 +24,14 @@ describe("Login Page", () => {
     );
   }
 
+  // before each test
+  beforeEach(async () => {
+    await LoginPage.open();
+  });
+
+  //
+  // Tests...
+  //
   it("should login with valid credentials ", async () => {
     // Define test data
     const expectedSuccessColor = "#5da423";

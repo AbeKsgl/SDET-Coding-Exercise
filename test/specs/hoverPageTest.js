@@ -5,10 +5,14 @@ import NotFoundPage from "../pageobjects/notFound.page.js";
 const expect = chai.expect;
 
 describe("Hover Page", () => {
+  // before each test
   beforeEach(async () => {
     await HoverPage.open();
   });
 
+  //
+  // Tests
+  //
   it("should display 3 user avatars", async () => {
     // Define test data.
     const expectedPageHeader = "Hovers";
